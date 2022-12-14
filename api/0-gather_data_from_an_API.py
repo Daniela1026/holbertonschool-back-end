@@ -38,9 +38,6 @@ if __name__ == "__main__":
     api_todo()
 
 
-
-
-
 # Write a Python script that, using this REST API, for a given employee ID, returns information about his/her TODO list progress.
 
 # Requirements:
@@ -55,16 +52,14 @@ if __name__ == "__main__":
 # Second and N next lines display the title of completed tasks: TASK_TITLE (with 1 tabulation and 1 space before the TASK_TITLE)
 
 
-
-
 # for user in user_url:
     #     if user['id'] == employee_id:
     #         employee_name = user['name']
-    
+
     # for task in  task_url:
     #     # if task['userId'] == employee_id:
     #         if task['completed'] is True:
     #             titles_of_task.append(task['title'])
     #             number_of_done_task += 1
     #         number_of_task_total += 1
-            # if task.get('userId') == (userId):
+    # if task.get('userId') == (userId):
