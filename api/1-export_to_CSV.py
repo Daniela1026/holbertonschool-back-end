@@ -15,4 +15,7 @@ def csv_expor():
     with open('{}.csv'.format(user_id), 'w') as f:
         for task in task_url:
             f.write('"{}","{}","{}","{}"\n'.format(
-                user_id, user_name, task_completed_status, task_title))
+                user_id, 
+                user_name['username'], 
+                task_completed_status['completed'], 
+                task_title['title']))
