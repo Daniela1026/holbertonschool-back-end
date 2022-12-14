@@ -7,15 +7,13 @@ from sys import argv
 
 def csv_expor():
     """CSV EXPORT"""
-    user_id = int(argv[1])
 
     user_url = get("https://jsonplaceholder.typicode.com/users").json()
     task_url = get("https://jsonplaceholder.typicode.com/todos").json()
 
-    with open('{}.csv'.format(user_id), 'w') as f:
+    with open('{}.csv'.format(argv[1]), 'w', newline='') as f:
+        writ = csv.writer(f, quoting=csv.QUOTE_ALL)
+        
         for task in task_url:
-            f.write('"{}","{}","{}","{}"\n'.format(
-                user_id, 
-                user_name['username'], 
-                task_completed_status['completed'], 
-                task_title['title']))
+            writ.writerow([user_url['id'], user_url['username'],
+                                task_url['completed'], task_url['title']])
