@@ -1,42 +1,38 @@
 #!/usr/bin/python3
 """Python script to export data in the CSV format"""
 
-import json
-import requests
+
+import csv
+from sys import argv
+from requests import get
 
 
-def export_csv():
-    """
-        EXPORT_CSV
-    """
+def csv_export():
+    """csv export"""
 
-    task_url = "https://jsonplaceholder.typicode.com/todos"
-    user_url = "https://jsonplaceholder.typicode.com/users?id="
-    response_todo = requests.get(task_url)
-    response_users = requests.get(user_url)
+    url_base = "https://jsonplaceholder.typicode.com/"
 
-    content_task = list(response_todo.json())
-    content_users = list(response_users.json())
+    user = "{}users/{}".format(url_base, argv[1])
+    res = get(user)
+    json_user = res.json()
+    username = json_user.get("username")
 
-    total_tasks = {}
-    for user in content_users:
+    todos = "{}todos?userId={}".format(url_base, argv[1])
+    res = get(todos)
+    json_task = res.json()
+    done_task = []
 
-        response = []
-        for i in content_task:
-            todo = {}
-            todo['username'] = user['username']
-            todo['task'] = i['title']
-            todo['completed'] = i['completed']
+    for todo in json_task:
+        done_task.append(
+            [argv[1], username, todo.get("completed"), todo.get("title")])
 
-            if user['id'] == i['userId']:
-                response.append(todo)
-
-        total_tasks[user['id']] = response
-
-    jsonString = json.dumps(total_tasks)
-    with open('todo_all_employees.json', 'w') as f:
-        f.write(jsonString)
+    csv_file = argv[1] + ".csv"
+    with open(csv_file, mode="w", encoding="utf-8") as f:
+        writer = csv.writer(f, delimiter=',', quotechar='"',
+                            quoting=csv.QUOTE_ALL)
+        for task in done_task:
+            writer.writerow(task)
 
 
 if __name__ == "__main__":
-    export_csv()
+    csv_export()
